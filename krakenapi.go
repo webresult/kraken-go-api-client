@@ -114,7 +114,7 @@ func (api *KrakenApi) Ticker(pairs ...string) (*TickerResponse, error) {
 func (api *KrakenApi) Depth(pairs ...string) (*Depth, error) {
 	resp, err := api.queryPublic("Depth", url.Values{
 		"pair": {strings.Join(pairs, ",")},
-	}, &TickerResponse{})
+	}, &Depth{})
 	if err != nil {
 		return nil, err
 	}
