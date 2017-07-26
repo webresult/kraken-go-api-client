@@ -111,15 +111,15 @@ func (api *KrakenApi) Ticker(pairs ...string) (*TickerResponse, error) {
 	return resp.(*TickerResponse), nil
 }
 // Depth returns the orderbook for given comma separated pairs
-func (api *KrakenApi) Depth(pair string) (*Depth, error) {
-	resp, err := api.queryPublic("Depth", url.Values{
+func (api *KrakenApi) Depth(pair string, depth *interface{}) error {
+	_, err := api.queryPublic("Depth", url.Values{
 		"pair": {pair},
-	}, &Depth{})
+	}, depth)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return resp.(*Depth), nil
+	return nil
 }
 
 // Trades returns the recent trades for given pair
