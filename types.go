@@ -1,7 +1,5 @@
 package krakenapi
 
-import "encoding/json"
-
 const (
 	DASHEUR  = "DASHEUR"
 	DASHUSD  = "DASHUSD"
