@@ -328,7 +328,7 @@ type ClosedOrdersResponse struct {
 	Count  int              `json:"count"`
 }
 
-type Depth map[string]interface{}
+type Depth map[string]DepthPair
 
 type DepthPair struct {
 	Asks []DepthItem `json:"asks"`
