@@ -1,5 +1,7 @@
 package krakenapi
 
+import "encoding/json"
+
 const (
 	DASHEUR  = "DASHEUR"
 	DASHUSD  = "DASHUSD"
@@ -325,3 +327,13 @@ type ClosedOrdersResponse struct {
 	Closed map[string]Order `json:"closed"`
 	Count  int              `json:"count"`
 }
+
+type Depth map[string]DepthPair
+
+type DepthPair struct {
+	Asks []DepthItem `json:"asks"`
+	Bids []DepthItem `json:"bids"`
+}
+
+type DepthItem []json.Number
+

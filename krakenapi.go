@@ -110,6 +110,17 @@ func (api *KrakenApi) Ticker(pairs ...string) (*TickerResponse, error) {
 
 	return resp.(*TickerResponse), nil
 }
+// Depth returns the orderbook for given comma separated pairs
+func (api *KrakenApi) c(pairs ...string) (*Depth, error) {
+	resp, err := api.queryPublic("Depth", url.Values{
+		"pair": {strings.Join(pairs, ",")},
+	}, &TickerResponse{})
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.(*Depth), nil
+}
 
 // Trades returns the recent trades for given pair
 func (api *KrakenApi) Trades(pair string, since int64) (*TradesResponse, error) {
