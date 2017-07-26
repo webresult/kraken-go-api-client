@@ -111,9 +111,9 @@ func (api *KrakenApi) Ticker(pairs ...string) (*TickerResponse, error) {
 	return resp.(*TickerResponse), nil
 }
 // Depth returns the orderbook for given comma separated pairs
-func (api *KrakenApi) Depth(pairs ...string) (*Depth, error) {
+func (api *KrakenApi) Depth(pair string) (*Depth, error) {
 	resp, err := api.queryPublic("Depth", url.Values{
-		"pair": {strings.Join(pairs, ",")},
+		"pair": {pair},
 	}, &Depth{})
 	if err != nil {
 		return nil, err
@@ -215,7 +215,7 @@ func (api *KrakenApi) ClosedOrders(args map[string]string) (*ClosedOrdersRespons
 }
 
 // Query sends a query to Kraken api for given method and parameters
-func (api *KrakenApi) Query(method string, data map[string]string, typ interface{}) (interface{}, error) {
+func (api *KrakenApi) Query(method string, data map[string]string) (interface{}, error) {
 	values := url.Values{}
 	for key, value := range data {
 		values.Set(key, value)
@@ -223,9 +223,9 @@ func (api *KrakenApi) Query(method string, data map[string]string, typ interface
 
 	// Check if method is public or private
 	if isStringInSlice(method, publicMethods) {
-		return api.queryPublic(method, values, typ)
+		return api.queryPublic(method, values, nil)
 	} else if isStringInSlice(method, privateMethods) {
-		return api.queryPrivate(method, values, typ)
+		return api.queryPrivate(method, values, nil)
 	}
 
 	return nil, fmt.Errorf("Method '%s' is not valid", method)
