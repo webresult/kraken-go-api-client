@@ -59,13 +59,13 @@ func TestTicker(t *testing.T) {
 		t.Errorf("Ticker() should not return an error, got %s", err)
 	}
 
-	if resp.XXBTZEUR.OpeningPrice == 0 {
-		t.Errorf("Ticker() should return valid OpeningPrice, got %+v", resp.XXBTZEUR.OpeningPrice)
+	if (*resp)["XXBTZEUR"].OpeningPrice == 0 {
+		t.Errorf("Ticker() should return valid OpeningPrice, got %+v", (*resp)["XXBTZEUR"].OpeningPrice)
 	}
 }
 
 func TestQueryTime(t *testing.T) {
-	result, err := publicAPI.Query("Time", map[string]string{})
+	result, err := publicAPI.Query("Time", map[string]string{}, nil)
 	resultKind := reflect.TypeOf(result).Kind()
 
 	if err != nil {
@@ -79,7 +79,7 @@ func TestQueryTime(t *testing.T) {
 func TestQueryTicker(t *testing.T) {
 	result, err := publicAPI.Query("Ticker", map[string]string{
 		"pair": "XXBTZEUR",
-	})
+	}, nil)
 	resultKind := reflect.TypeOf(result).Kind()
 
 	if err != nil {

@@ -215,7 +215,7 @@ func (api *KrakenApi) ClosedOrders(args map[string]string) (*ClosedOrdersRespons
 }
 
 // Query sends a query to Kraken api for given method and parameters
-func (api *KrakenApi) Query(method string, data map[string]string) (interface{}, error) {
+func (api *KrakenApi) Query(method string, data map[string]string, typ interface{}) (interface{}, error) {
 	values := url.Values{}
 	for key, value := range data {
 		values.Set(key, value)
@@ -223,9 +223,9 @@ func (api *KrakenApi) Query(method string, data map[string]string) (interface{},
 
 	// Check if method is public or private
 	if isStringInSlice(method, publicMethods) {
-		return api.queryPublic(method, values, nil)
+		return api.queryPublic(method, values, typ)
 	} else if isStringInSlice(method, privateMethods) {
-		return api.queryPrivate(method, values, nil)
+		return api.queryPrivate(method, values, typ)
 	}
 
 	return nil, fmt.Errorf("Method '%s' is not valid", method)
